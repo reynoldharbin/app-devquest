@@ -1,0 +1,14 @@
+AWS c4.xlarge
+AWS c4.2xlarge
+AWS c4.4xlarge
+AWS c4.8xlarge
+AWS c3.large
+AWS c3.xlarge
+AWS c3.2xlarge
+AWS c3.4xlarge
+AWS c3.8xlarge
+GCE n1-highcpu-2
+GCE n1-highcpu-4
+GCE n1-highcpu-8
+GCE n1-highcpu-16
+GCE n1-highcpu-321

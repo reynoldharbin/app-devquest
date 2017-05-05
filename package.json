@@ -1,0 +1,18 @@
+{
+  "name": "dofindme",
+  "version": "1.0.0",
+  "description": "API App Server to search github for developers interested in search topic",
+  "main": "dofindme.js",
+  "dependencies": {
+    "googleapis": "^19.0.0",
+    "octonode": "^0.7.12",
+    "prettyjson": "^1.2.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "hello"
+  },
+  "author": "reynold@digitalocean.com",
+  "license": "ISC"
+}
