@@ -4,9 +4,12 @@
   "description": "API App Server to search github for developers interested in search topic",
   "main": "dofindme.js",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "googleapis": "^19.0.0",
     "octonode": "^0.7.12",
     "prettyjson": "^1.2.1",
+    "promise": "^7.1.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {},
