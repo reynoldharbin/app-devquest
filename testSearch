@@ -1,0 +1,17 @@
+APPLICATIONID=fubarAppKey
+CLIENTKEY=fubarClientKey
+FUNCTION=search
+BODY='{}'
+
+clear
+echo "STARTNG cURL call to doFindMe"
+echo ""
+
+
+#curl -i -X POST -H 'Content-Type: application/json' -d '{"searchterm":"AWS c4.xlarge", "searchsite":"github"}' http://localhost:3000/search
+
+curl -i -X POST -H 'Content-Type: application/json' -d '{"searchterm":"AWS EC2 Security Groups", "searchsite":"github"}' http://localhost:3000/search
+
+#curl -i -X POST -H 'Content-Type: application/json' -d '{"searchterm":"AWS c4.xlarge", "searchsite":"stackoverflow"}' http://localhost:3000/search
+#curl -i -X POST -H 'Content-Type: application/json' -d '{"searchterm":"AWS c4.xlarge", "searchsite":"newdevelopersite"}' http://localhost:3000/search
+
