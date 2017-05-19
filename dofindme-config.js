@@ -7,7 +7,8 @@ exports.apikeys  = {
  	prodAPIUrl: "http://api.dofind.me.io:1337/", //PRODUCTION
  	devAPIUrl: "http://dev-api.dofind.me:1337",  //DEVELOPEMENT
     AppId: "doFindMeAppId-XLut2v5a5z",
-	ClientKey: "doFindMeMasterKey-ITlO9YRqCH"
+	ClientKey: "doFindMeMasterKey-ITlO9YRqCH",
+	github: "960d48dedbc25fd35a98c353168acd973f0749f0" //personal access token
 }
 
 exports.build  = {

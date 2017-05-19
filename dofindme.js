@@ -207,7 +207,7 @@ app.post('/search', function(req, res){
 	var searchsite = req.body.searchsite;
     var request = {};
 
-    console.log(logTag+'search:with req.body:' + JSON.stringify(req.body) );
+    //console.log(logTag+'search:with req.body:' + JSON.stringify(req.body) );
 
 	if (searchterm) {
 		//console.log('WED:0:' + logTag+'search:with searchterm:' + searchterm );
@@ -225,9 +225,9 @@ app.post('/search', function(req, res){
 
 	//set up a promise and call actions.fetchGitInfo(req)  //RMH-HERE-99-NOW-2
 	if ( searchsite == "github" || searchsite == "gitHub") {
-		console.log(logTag + 'calling actions.searchGithub with request:' + JSON.stringify(request) );
+		//console.log(logTag + 'calling actions.searchGithub with request:' + JSON.stringify(request) );
 		return actions.searchGitHub(request).then(function(githubResults) {
-	        console.log ('CHECK:000:' + logTag + 'with githubResults:'+JSON.stringify(githubResults));
+	        //console.log ('CHECK:000:' + logTag + 'with githubResults:'+JSON.stringify(githubResults));
 	        
 	        res.setHeader('Content-Type', 'application/json');
 			res.writeHead(200, {"Content-Type": "application/json"});
