@@ -84,6 +84,8 @@ module.exports = {
 
 			var ghsearch = client.search();
 			var searchterm = request.searchterm;
+			console.log(logTag + "searchGitHub:client initated with passed searchterm:" + searchterm);
+
 			var promise = new nPromise(function(resolve, reject){
 				if (searchterm ) {
 					//console.log(logTag+"searchGitHub:call github API for term: " + searchterm );
@@ -104,17 +106,17 @@ module.exports = {
 							var itemsReturnedArray = body.items ;
 							var itemsReturnedCount = itemsReturnedArray.length;
 							
-							console.log("*************************************");
-							console.log("  --> searchterm                : " + searchterm);
-							console.log("  --> searchsite                : " + searchsite);
-							console.log("  --> totalResultsCount         : " + totalResultsCount);
-							console.log("  --> itemsReturnedCount        : " + itemsReturnedCount);
-							console.log("  --> resultsHeader             : " + module.exports.prettyJSON(header));
-							console.log("*************************************");
+							//console.log("*************************************");
+							//console.log("  --> searchterm                : " + searchterm);
+							//console.log("  --> searchsite                : " + searchsite);
+							//console.log("  --> totalResultsCount         : " + totalResultsCount);
+							//console.log("  --> itemsReturnedCount        : " + itemsReturnedCount);
+							//console.log("  --> resultsHeader             : " + module.exports.prettyJSON(header));
+							//console.log("*************************************");
 
 							//console.log("WORKING:1: --> stringified body      : " + JSON.stringify(body));
 							//console.log("*************************************");
-							console.log("");
+							//console.log("");
 
 							//console.log("searchTerm,title,user,created,updated,userLink,pageLink");
 
@@ -144,7 +146,7 @@ module.exports = {
 
 							    	//var body = module.exports.prettyJSON(responseItem.body);
 									//console.log(searchterm + ',' + userLogin + ',' + userLink +  ',' + created + ',' + updated + ',' + pageLink + ',' + title);
-									console.log("PROCESSING item with title:" + title);
+									console.log(logTag + "PROCESSING returned item with title:" + title);
 									resultItemObject['searchSite'] = searchsite;
 									resultItemObject['title'] = title;
 									resultItemObject['pageLink'] = pageLink;
@@ -161,7 +163,8 @@ module.exports = {
 							    });
 
 							    resultsObject.resultsArray = resultsArray;
-							    console.log(logTag + "github:resolving with:" + JSON.stringify(resultsObject));
+							    console.log(logTag + "github:resolving with resultsObject");
+							    //console.log(logTag + "github:resolving with resultsObject:" + JSON.stringify(resultsObject));
 
 								resolve(resultsObject);
 							} else {

@@ -240,7 +240,8 @@ app.post('/search', function(req, res){
 			var json = JSON.stringify(githubResults);
 	        res.setHeader('Content-Type', 'application/json');
 			res.writeHead(200, {"Content-Type": "application/json"});
-	        //console.log (logTag + 'search:with githubResults:'+json);
+	        console.log ('' + logTag + 'search:returning API call with github json');
+	        //console.log ('' + logTag + 'search:returning json' + json);
 			res.end(json);
 	      },
 	      function(error) { 

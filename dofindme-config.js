@@ -19,5 +19,5 @@ exports.build  = {
 
 exports.settings = {
 	stubAPI: false,
-	githubMaxResults: 2
+	githubMaxResults: 5
 }
