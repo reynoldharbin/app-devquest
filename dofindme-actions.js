@@ -54,7 +54,6 @@ module.exports = {
 
 		// Instantiate a github client with or without a token
 		//var client = github.client();
-
 		//client from credentials
 		/*
 		var client = github.client({
@@ -63,90 +62,111 @@ module.exports = {
 		});
 		*/
 
-		//client from token : 960d48dedbc25fd35a98c353168acd973f0749f0
-		var client = github.client(config.apikeys.github);
-		console.log("GITHUB:client initated with key:" + config.apikeys.github);
+		if (config.settings.stubAPI == true ) {
+			console.log("CHECK:0:gotta stub...");
 
-		var ghsearch = client.search();
-		var searchterm = request.searchterm;
-		var resultsArray = [];
-		var promise = new nPromise(function(resolve, reject){
-			if (searchterm ) {
-				//console.log(logTag+"searchGitHub:call github API for for term: " + searchterm );
+			var stubPromise = new nPromise(function(resolve, reject){
 
-				ghsearch.issues({
-				  q: searchterm,
-				  page: 1,
-				  per_page: 1000,
-				  sort: 'created',
-				  order: 'asc'
-				}, function(error, body, header){
-					if (error){
-						console.log('--> SEARCH ERROR:' +JSON.stringify(error));
-						reject(logTag + "searchGitHub:You suck!");
-					} else {
-						var itemCount = body.total_count ;
-						var itemsArray = body.items ;
-						var itemsArrayCount = itemsArray.length;
+				console.log("CHECK:1:inside the promise, about the resolve.");
+				var stubResults = {};
+				stubResults['title'] = "stubTitle";
+				stubResults['userLogin'] = "stubUserLogin";
+				stubResults['userLink'] = "stubUserLink";
+				stubResults['pageLink'] = "stubPageLink";
+				stubResults['created'] = "stubCreated";
+				stubResults['updated'] = "stubUpdated";
+				stubResults['searchterm'] = "stubSearchterm";
+				stubResults['searchsite'] = "github";
+				resolve(stubResults);				
+			});  //end promise
+			return stubPromise;
 
-						console.log("*************************************");
-						console.log("  --> searchterm      : " + searchterm);
-						console.log("  --> itemCount       : " + itemCount);
-						console.log("  --> itemsArrayCount : " + itemsArrayCount);
-						console.log("  --> resultsHeader   : " + module.exports.prettyJSON(header));
-						console.log("*************************************");
-						console.log("");
-						//console.log("searchTerm,title,user,created,updated,userLink,pageLink");
+		} else {
+			var client = github.client(config.apikeys.github);
+			console.log("GITHUB:client initated with key:" + config.apikeys.github);
 
-						var resultsObject = {};
-
-						if ( itemsArrayCount > 0 ) {
-							_.each(itemsArray, function(responseItem) {
-								var title = responseItem.title;
-								var pageLink = responseItem.html_url;
-						    	var userLogin = responseItem.user.login;
-								var userLink = responseItem.user.html_url;
-						    	var created = responseItem.created_at;
-						    	var updated = responseItem.updated_at;
-						    	//var body = module.exports.prettyJSON(responseItem.body);
-								//console.log(searchterm + ',' + userLogin + ',' + userLink +  ',' + created + ',' + updated + ',' + pageLink + ',' + title);
-								console.log("PROCESSING item with title:" + title);
-								resultsObject['title'] = title;
-								resultsObject['userLogin'] = userLogin;
-								resultsObject['userLink'] = userLink;
-								resultsObject['pageLink'] = pageLink;
-								resultsObject['created'] = created;
-								resultsObject['updated'] = updated;
-								resultsObject['searchterm'] = searchterm;
-								resultsObject['searchsite'] = 'github';
-
-								//console.log("PUSHING resultsObject" + JSON.stringify(resultsObject));
-								resultsArray.push(resultsObject);
-								resultsObject = {};
-						    });
-						    console.log("DONE loading resultsArray with:" + resultsArray.length + " items!");
-							resolve(resultsArray);
+			var ghsearch = client.search();
+			var searchterm = request.searchterm;
+			var resultsArray = [];
+			var promise = new nPromise(function(resolve, reject){
+				if (searchterm ) {
+					//console.log(logTag+"searchGitHub:call github API for for term: " + searchterm );
+					ghsearch.issues({
+					  q: searchterm,
+					  page: 1,
+					  per_page: 1000,
+					  sort: 'created',
+					  order: 'asc'
+					}, function(error, body, header){
+						if (error){
+							console.log('--> SEARCH ERROR:' +JSON.stringify(error));
+							reject(logTag + "searchGitHub:You suck!");
 						} else {
-							console.log("ERROR: no items returned");
-							reject("No items to return");
+							var itemCount = body.total_count ;
+							var itemsArray = body.items ;
+							var itemsArrayCount = itemsArray.length;
+
+							console.log("*************************************");
+							console.log("  --> searchterm      : " + searchterm);
+							console.log("  --> itemCount       : " + itemCount);
+							console.log("  --> itemsArrayCount : " + itemsArrayCount);
+							console.log("  --> resultsHeader   : " + module.exports.prettyJSON(header));
+							console.log("*************************************");
+							console.log("");
+							//console.log("searchTerm,title,user,created,updated,userLink,pageLink");
+
+							var resultsObject = {};
+
+							if ( itemsArrayCount > 0 ) {
+								_.each(itemsArray, function(responseItem) {
+									var title = responseItem.title;
+									var pageLink = responseItem.html_url;
+							    	var userLogin = responseItem.user.login;
+									var userLink = responseItem.user.html_url;
+							    	var created = responseItem.created_at;
+							    	var updated = responseItem.updated_at;
+							    	//var body = module.exports.prettyJSON(responseItem.body);
+									//console.log(searchterm + ',' + userLogin + ',' + userLink +  ',' + created + ',' + updated + ',' + pageLink + ',' + title);
+									console.log("PROCESSING item with title:" + title);
+									resultsObject['title'] = title;
+									resultsObject['userLogin'] = userLogin;
+									resultsObject['userLink'] = userLink;
+									resultsObject['pageLink'] = pageLink;
+									resultsObject['created'] = created;
+									resultsObject['updated'] = updated;
+									resultsObject['searchterm'] = searchterm;
+									resultsObject['searchsite'] = 'github';
+
+									//console.log("PUSHING resultsObject" + JSON.stringify(resultsObject));
+									resultsArray.push(resultsObject);
+									resultsObject = {};
+							    });
+							    console.log("DONE loading resultsArray with:" + resultsArray.length + " items!");
+								resolve(resultsArray);
+							} else {
+								console.log("ERROR: no items returned");
+								reject("No items to return");
+							}
+							//console.log('--> SEARCH BODY:' + prettyJSON(body));
+							//console.log('--> SEARCH HEADER:' +JSON.stringify(header));
+
+							
 						}
-						//console.log('--> SEARCH BODY:' + prettyJSON(body));
-						//console.log('--> SEARCH HEADER:' +JSON.stringify(header));
+					}); 
+					//resolve("Your awesome!");			
+				} else {
+					console.log("ERROR:"+logTag+"requires searchterm and searchsite");
+					reject("You suck!");
+				}
+			});  //end promise
 
-						
-					}
-				}); 
-				//resolve("Your awesome!");			
-			} else {
-				console.log("ERROR:"+logTag+"requires searchterm and searchsite");
-				reject("You suck!");
-			}
-		});  //end promise
+			return promise;
 
-		return promise;
+		}  //end stub if/else check
+
+
+		
 	}
-	//EE
-
 
 
 }

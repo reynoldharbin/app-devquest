@@ -8,10 +8,14 @@ exports.apikeys  = {
  	devAPIUrl: "http://dev-api.dofind.me:1337",  //DEVELOPEMENT
     AppId: "doFindMeAppId-XLut2v5a5z",
 	ClientKey: "doFindMeMasterKey-ITlO9YRqCH",
-	github: "960d48dedbc25fd35a98c353168acd973f0749f0" //personal access token
+	github: "960d48dedbc25fd35a98c353168acd973f0749f0" //Reynold's personal access token
 }
 
 exports.build  = {
   forProduction: true,
   forDevelopment: false
+}
+
+exports.settings = {
+	stubAPI: false
 }

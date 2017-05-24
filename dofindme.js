@@ -203,6 +203,13 @@ app.get('/', function(req, res){
 
 //POST
 app.post('/search', function(req, res){
+
+	var jsonBody = req.body;
+	//console.log("000:"+logTag +'search:with jsonBody' + jsonBody);
+	var jsonString = JSON.stringify(jsonBody);
+
+	console.log(logTag +'search:with jsonBodyString' + jsonString);
+
 	var searchterm = req.body.searchterm;
 	var searchsite = req.body.searchsite;
     var request = {};
@@ -214,6 +221,7 @@ app.post('/search', function(req, res){
 		request.searchterm = searchterm;
 	} else {
 		console.log(logTag + 'no search term provided');
+		request.searchterm = 'none';
 	}
 
 	if (searchsite) {
@@ -221,20 +229,19 @@ app.post('/search', function(req, res){
 		request.searchsite = searchsite;
 	} else {
 		console.log(logTag + 'no search site provided');
+		request.searchsite = 'stub';
 	}
 
 	//set up a promise and call actions.fetchGitInfo(req)  //RMH-HERE-99-NOW-2
 	if ( searchsite == "github" || searchsite == "gitHub") {
 		//console.log(logTag + 'calling actions.searchGithub with request:' + JSON.stringify(request) );
 		return actions.searchGitHub(request).then(function(githubResults) {
-	        //console.log ('CHECK:000:' + logTag + 'with githubResults:'+JSON.stringify(githubResults));
+
+			var json = JSON.stringify(githubResults);
 	        
 	        res.setHeader('Content-Type', 'application/json');
 			res.writeHead(200, {"Content-Type": "application/json"});
-			//var json = JSON.stringify(githubResults);
-
-			var json = module.exports.prettyJSON(githubResults)
-
+	        console.log (logTag + 'search:with githubResults:'+json);
 			res.end(json);
 	      },
 	      function(error) { 
@@ -243,7 +250,7 @@ app.post('/search', function(req, res){
 	    });
 
 	} else if ( searchsite == "stackoverflow" ) {
-		console.log(logTag + 'calling actions.helloWorld with request:' + JSON.stringify(request));
+		console.log(logTag + 'search:calling actions.helloWorld with request:' + JSON.stringify(request));
 		return actions.helloWorld(request).then(function(returnedHelloWorld) {
 	        console.log (logTag + "with returnedHelloWorld:"+JSON.stringify(returnedHelloWorld));
 	        res.setHeader('Content-Type', 'application/json');
@@ -257,19 +264,50 @@ app.post('/search', function(req, res){
 	        res.error(error); 
 	    });
 
+	} else if ( searchsite == "stub" ) {
+		var stubSearchResults = {};
+		stubSearchResults.searchterm = "AWS EC2 Security Groups";
+		stubSearchResults.totalResults = 2;
+		stubSearchResults.resultsPerPage = 100;
+		stubSearchResults.totalPages = 1;
+		stubSearchResults.currentPage = 1;
+		
+		var stubResultsArray = [];
+		var resultOneObject = {};
+		var resultTwoObject = {};
+
+		resultOneObject.title = "creating EC2 security groups seem to require description";
+		resultOneObject.userLogin = "technicalpickles";
+		resultOneObject.userLink = "https://github.com/technicalpickles";
+		resultOneObject.pageLink = "https://github.com/fog/fog/issues/4";
+		resultOneObject.created = "2010-01-23T06:42:54Z";
+		resultOneObject.updated = "2010-01-23T19:31:07Z";
+		resultOneObject.searchsite = "github";
+		stubResultsArray.push(resultOneObject);
+
+		resultTwoObject.title = "Rudy::Metadata::DuplicateRecord";
+		resultTwoObject.userLogin = "utgarda";
+		resultTwoObject.userLink = "https://github.com/utgarda";
+		resultTwoObject.pageLink = "https://github.com/solutious/rudy/issues/42";
+		resultTwoObject.created = "2010-05-12T13:04:37Z";
+		resultTwoObject.updated = "2010-05-14T11:49:10Z";
+		resultTwoObject.searchsite = "github";
+		stubResultsArray.push(resultTwoObject);
+
+		stubSearchResults.stubResultsArray = stubResultsArray;
+
+		console.log (logTag + "search:stub:returning stubSearchResults:" +JSON.stringify(stubSearchResults));
+		
+
+        res.setHeader('Content-Type', 'application/json');
+		res.writeHead(200, {"Content-Type": "application/json"});
+		res.end(JSON.stringify(stubSearchResults));
 	} else {
 		console.log(logTag+'search:unknown searchsite:' + searchsite );
-		console.log('END:nothing to call...');
+		console.log('END:no API to call...');
 	}
 
-
-    
-
-    //searchterm
-	//console.log('HANDLING POST req.body: ' + req.body);
-	
-
-	console.log("END:returned json:" + json);
+	console.log(logTag + 'end of /search reoute');
 
 });
 
@@ -282,7 +320,7 @@ app.post('/search', function(req, res){
 
 app.listen(PORT, function(){
 	console.log("******************************************************");
-	console.log("**--> doFind.me server started on port:" + PORT);
+	console.log("**--> doFind.me app server started on port:" + PORT);
 	console.log("");
 });
 
