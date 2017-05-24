@@ -1,10 +1,7 @@
 // created by Reynold Harbin on 5/24/17
 // reynold@digitalocean.com
 
-
-
 var _ = require('underscore');
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var github = require('octonode');
@@ -241,10 +238,9 @@ app.post('/search', function(req, res){
 		return actions.searchGitHub(request).then(function(githubResults) {
 
 			var json = JSON.stringify(githubResults);
-	        
 	        res.setHeader('Content-Type', 'application/json');
 			res.writeHead(200, {"Content-Type": "application/json"});
-	        console.log (logTag + 'search:with githubResults:'+json);
+	        //console.log (logTag + 'search:with githubResults:'+json);
 			res.end(json);
 	      },
 	      function(error) { 
@@ -258,7 +254,7 @@ app.post('/search', function(req, res){
 	        console.log (logTag + "with returnedHelloWorld:"+JSON.stringify(returnedHelloWorld));
 	        res.setHeader('Content-Type', 'application/json');
 			res.writeHead(200, {"Content-Type": "application/json"});
-			var returnObject = { "searchterm": "FOO", "searchsite": "BAR" };
+			var returnObject = { "searchterm": "FOO", "searchsite": "stackoverflow" };
 			var json = JSON.stringify(returnObject);
 			res.end(json);
 	      },
@@ -318,7 +314,7 @@ app.post('/search', function(req, res){
 
 app.listen(PORT, function(){
 	console.log("******************************************************");
-	console.log("**--> doFind.me app server started on port:" + PORT);
+	console.log("**--> devquest app server started on port:" + PORT);
 	console.log("");
 });
 
