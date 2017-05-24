@@ -6,7 +6,7 @@ To install node on mac: 'brew install node'
 
 Then, in the directory with the repository, install following npm packages:
  npm install body-parser
- npm install express express"
+ npm install express
  npm install googleapis   
  npm install octonode   
  npm install prettyjson   
