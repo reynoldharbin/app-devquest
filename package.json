@@ -10,6 +10,7 @@
     "octonode": "^0.7.12",
     "prettyjson": "^1.2.1",
     "promise": "^7.1.1",
+    "request": "^2.81.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {},

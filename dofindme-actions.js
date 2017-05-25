@@ -6,6 +6,8 @@ var config = require('./dofindme-config.js');
 var logTag = "dofindme-actions.js:";
 var nPromise = require('promise'); 
 var prettyjson = require("prettyjson");
+var request = require('request');
+
 
 //APIs
 var github = require('octonode');
@@ -46,6 +48,86 @@ module.exports = {
 
 		return promise;
 	},
+
+	githubDeveloperDetails: function(request, response) {
+		console.log(logTag + "githubDeveloperDetails:with request:" +JSON.stringify(request));
+
+		var promise = new nPromise(function(resolve, reject){
+			var gitHubUserLogin = request.userLogin; //RMH-HERE-99-NOW 
+			if (gitHubUserLogin) {
+				var getGitHubUserInfoURL = "https://api.github.com/users/"+gitHubUserLogin+"/events/public"
+				console.log("CZECH:"+logTag+"about to hit getGitHubUserInfoURL:"+getGitHubUserInfoURL);
+				resolve("about to hit getGitHubUserInfoURL:"+getGitHubUserInfoURL);
+			} else {
+				console.log(logTag+"githubDeveloperDetails:you ain't got gitHubUserLogin!");
+				resolve("githubDeveloperDetails:you ain't got gitHubUserLogin!");
+			}
+		});  //end promise
+
+		return promise;		
+
+/*
+		//hit a request to: https://api.github.com/users/{gitHubUserLogin}/events/public
+		//start
+		request({
+			url: getGitHubUserInfoURL, 
+	    	method: 'GET', //Specify the method
+	    	headers: { //Specify headers 
+	    		'Content-Type': 'application/json'
+		    }
+		}, function(error, response, body){
+			if (error){
+				console.log("githubDeveloperDetails:unable to get URL with error:"+JSON.stringify(body));
+				res.render('error');
+			} else {
+				var responseStatusCode = response.statusCode;
+				var responseHeaders = response.headers;
+				var bodyObject = JSON.parse(body);
+				console.log("TOUR:0:"+logTag+"githubDeveloperDetails:with body:"+body);
+				
+
+				//set up variables to send into the view //RMH-HERE-99-NOW
+				var sterm = body.searchTerm, 
+					ssite = "github",
+					stotalResultsCount = bodyObject.totalResultsCount,
+					sreturnedReturnedCount = bodyObject.itemsReturnedCount,  
+					sresultsperpage = bodyObject.resultsPerPage,
+					
+					stotalpages = bodyObject.totalPages,
+					scurrentpage = bodyObject.currentPage, 
+					sresultsarray = bodyObject.resultsArray;
+
+				if (body) {
+					//check resultsMeta //meta about the results, like searchSite, searchTerm, resultsAvailable
+					//set up response object with users email
+					response("with body:" + body);
+					};
+
+
+				} else {
+					console.log("ERROR:"+logTag+"nil URL response...");
+					response("with error:" + error);
+				};
+			}
+		})
+
+		//end
+
+
+		//process JSON
+
+
+		
+		
+
+		return promise;
+
+*/
+
+
+
+	},
+
 
 	searchGitHub: function(request, response) {
 		console.log(logTag + "searchGitHub: with request:" +JSON.stringify(request));
@@ -124,7 +206,7 @@ module.exports = {
 							//populate resultsObject
 							var resultsArray = [];
 
-							var resultsObject = {}; //RMH-HERE-99-NOW define this
+							var resultsObject = {}; 
 							resultsObject.searchTerm = searchterm;
 							resultsObject.totalResultsCount = totalResultsCount;
 							resultsObject.itemsReturnedCount = itemsReturnedCount;
@@ -139,8 +221,20 @@ module.exports = {
 							    	var created = responseItem.created_at;
 							    	var updated = responseItem.updated_at;
 									var issueCommentsCount = responseItem.comments;
-							    	var issueBody = responseItem.body;
 							    	
+									//var issueBody = responseItem.body;
+									var truncatedBody160 = responseItem.body.substring(0,160);
+							    	var issueBody = truncatedBody160;
+
+							    	
+
+							    	//call githubDeveloperDetails   //RMH-HERE-99-NOW
+							    	var requestForDevDetails = {};
+							    	requestForDevDetails.userLogin = userLogin;
+							    	//var developerInfo = module.exports.githubDeveloperDetails(requestForDevDetails); //RMH-HERE-99-NOW
+							    	//console.log("TOUR:1:"+logTag + "searchGitHub:returned developerInfo:" + JSON.stringify(developerInfo));
+
+
 							    	// set up the resultItemObject
 							    	var resultItemObject = {};
 
@@ -157,7 +251,7 @@ module.exports = {
 									resultItemObject['created'] = created;
 									resultItemObject['updated'] = updated;
 									resultItemObject['issueCommentsCount'] = issueCommentsCount;
-									resultItemObject['issueBody'] = issueBody;  //RMH-HERE-99-NOW should this be stringified?
+									resultItemObject['issueBody'] = issueBody;  
 									resultsArray.push(resultItemObject);
 									resultItemObject = {};  //reset the resultsObject variable
 							    });
