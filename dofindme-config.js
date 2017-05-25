@@ -8,8 +8,7 @@ exports.apikeys  = {
  	devAPIUrl: "http://dev-api.dofind.me:1337",  //DEVELOPEMENT
     AppId: "doFindMeAppId-XLut2v5a5z",
 	ClientKey: "doFindMeMasterKey-ITlO9YRqCH",
-	//github: "960d48dedbc25fd35a98c353168acd973f0749f0" //Reynold's personal access token
-	github: "899d4ab9c17bcce8891c834b9956f52f391bbae9 "
+	github: "yourPersonalAccessToken"
 }
 
 exports.build  = {
@@ -19,5 +18,5 @@ exports.build  = {
 
 exports.settings = {
 	stubAPI: false,
-	githubMaxResults: 5
+	githubMaxResults: 10
 }
