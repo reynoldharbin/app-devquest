@@ -4,11 +4,11 @@
 var logTag = "dofindme-config.js:";
 
 exports.apikeys  = {
- 	prodAPIUrl: "http://api.dofind.me:1337/", //PRODUCTION
- 	devAPIUrl: "http://dev-api.dofind.me:1337",  //DEVELOPEMENT
-    AppId: "doFindMeAppId-XLut2v5a5z",
-	ClientKey: "doFindMeMasterKey-ITlO9YRqCH",
-	github: "yourPersonalAccessToken"
+ 	prodAPIUrl: "http://api.devquest.io:3000/", //PRODUCTION
+ 	devAPIUrl: "http://api.devquest.io:3000",  //DEVELOPEMENT
+    AppId: "devQuestAppKey-XLut2v5a5z",
+	ClientKey: "devQuestClientAppKey-ITlO9YRqCH",
+	github: "0f2c67e677b5ec7dc4bfe3bbaf4735a27ad351c8"
 }
 
 exports.build  = {

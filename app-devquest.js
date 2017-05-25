@@ -39,7 +39,7 @@ var ghsearch = client.search();
 //var ghproject      = client.project('pksunkara/hub', 37);
 //var ghnotification = client.notification(37);
 
-var logTag = "dofindme.js:";
+var logTag = "app-devquest.js:";
 
 //const API_KEY = 'AIzaSyCW9fZsCTVa7zxh-QfPwFqlwa1z6JrnLTc';
 const SEARCH_1 = 'AWS c4.xlarge';
@@ -246,7 +246,9 @@ app.post('/search', function(req, res){
 	      },
 	      function(error) { 
 	        console.log(logTag+"ERROR calling helloWorld with request:"+JSON.stringify(request) + ": with error:"+JSON.stringify(error));
-	        res.error(error); 
+	     
+	        res.end(JSON.stringify(error));
+	        //res.error(error); 
 	    });
 
 	} else if ( searchsite == "stackoverflow" ) {

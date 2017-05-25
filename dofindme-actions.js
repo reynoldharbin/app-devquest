@@ -168,8 +168,10 @@ module.exports = {
 
 								resolve(resultsObject);
 							} else {
-								console.log("ERROR: no items returned");
-								reject("No items to return");
+								console.log(logTag + "no items returned for search term:" +searchterm);
+								resultsObject.message = "No items returned for search term" +searchterm;
+								resolve(resultsObject);
+								//reject("No items to return");
 							}
 							//console.log('--> SEARCH BODY:' + prettyJSON(body));
 							//console.log('--> SEARCH HEADER:' +JSON.stringify(header));
