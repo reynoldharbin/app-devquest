@@ -223,10 +223,14 @@ module.exports = {
 									var issueCommentsCount = responseItem.comments;
 							    	
 									//var issueBody = responseItem.body;
-									var truncatedBody256 = responseItem.body.substring(0,256);
-							    	var issueBody = truncatedBody256;
+									if (responseItem.body) {
+										var truncatedBody256 = responseItem.body.substring(0,256);
+							    		var issueBody = truncatedBody256;
+									} else {
+							    		var issueBody = '';
+							    		console.log(logTag+"searchGitHub:no issue body, setting to empty");
+									}
 
-							    	
 
 							    	//call githubDeveloperDetails   //RMH-HERE-99-NOW
 							    	var requestForDevDetails = {};
