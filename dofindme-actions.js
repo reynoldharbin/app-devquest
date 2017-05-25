@@ -224,7 +224,23 @@ module.exports = {
 							    	
 									//var issueBody = responseItem.body;
 									if (responseItem.body) {
-										var truncatedBody256 = responseItem.body.substring(0,256);
+										//RMH-HERE-99-NOW 
+										var n = responseItem.body.indexOf(searchterm);
+										//console.log("NEW:0:"+searchterm+" starts at position: " +n + "of " +responseItem.body.length);
+
+										var idealStartPosition = n-40;
+										var idealEndPosition = idealStartPosition+256;
+
+										//console.log("NEW:1:idealStartPosition: "+idealStartPosition);
+										//console.log("NEW:2:idealEndPosition: "+idealEndPosition);
+										
+										var startPosition = Math.max(idealStartPosition, 0);
+										var endPosition = Math.max(idealEndPosition, responseItem.body.length);
+
+										//console.log("NEW:3:"+searchterm+" use startPosition: "+startPosition+", endPosition: "+endPosition);
+
+
+										var truncatedBody256 = responseItem.body.substring(startPosition,endPosition);
 							    		var issueBody = truncatedBody256;
 									} else {
 							    		var issueBody = '';
