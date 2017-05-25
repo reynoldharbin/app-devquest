@@ -223,8 +223,8 @@ module.exports = {
 									var issueCommentsCount = responseItem.comments;
 							    	
 									//var issueBody = responseItem.body;
-									var truncatedBody160 = responseItem.body.substring(0,160);
-							    	var issueBody = truncatedBody160;
+									var truncatedBody256 = responseItem.body.substring(0,256);
+							    	var issueBody = truncatedBody256;
 
 							    	
 
