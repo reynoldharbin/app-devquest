@@ -235,7 +235,7 @@ module.exports = {
 										//console.log("NEW:2:idealEndPosition: "+idealEndPosition);
 										
 										var startPosition = Math.max(idealStartPosition, 0);
-										var endPosition = Math.max(idealEndPosition, responseItem.body.length);
+										var endPosition = Math.min(idealEndPosition, responseItem.body.length);
 
 										//console.log("NEW:3:"+searchterm+" use startPosition: "+startPosition+", endPosition: "+endPosition);
 
